@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     ripgrep \
     sudo \
+    tmux \
     && rm -rf /var/lib/apt/lists/*
 # Install GitHub CLI
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
@@ -26,5 +27,10 @@ RUN useradd -m -s /bin/bash claude && \
 USER claude
 WORKDIR /home/claude
 
-RUN npm install -g @anthropic-ai/claude-cli
-CMD ["/bin/bash"]
+# Configure npm global directory and install Claude Code
+RUN npm config set prefix '/home/claude/.npm-global' && \
+    npm install -g @anthropic-ai/claude-code
+
+# Add npm global bin to PATH
+ENV PATH="/home/claude/.npm-global/bin:$PATH"
+CMD ["claude"]
