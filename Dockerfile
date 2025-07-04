@@ -25,7 +25,7 @@ RUN useradd -m -s /bin/bash claude && \
 
 # Switch to claude user
 USER claude
-WORKDIR /home/claude
+WORKDIR /home/claude/workspace
 
 # Configure npm global directory and install Claude Code
 RUN npm config set prefix '/home/claude/.npm-global' && \

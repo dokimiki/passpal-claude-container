@@ -70,6 +70,46 @@ docker compose down
 `claude-home` ボリュームがコンテナの `/home/claude` にマウントされます。
 データは永続化されるため、コンテナを再起動してもファイルは保持されます。
 
+### ファイルのコピー
+
+#### コンテナからホストへ
+```bash
+# ファイルをコピー
+docker cp claude-container:/home/claude/file.txt ./file.txt
+
+# ディレクトリをコピー
+docker cp claude-container:/home/claude/project ./project
+```
+
+#### ホストからコンテナへ
+```bash
+# ファイルをコピー
+docker cp ./file.txt claude-container:/home/claude/
+
+# ディレクトリをコピー
+docker cp ./project claude-container:/home/claude/
+```
+
+### ボリューム初期化
+
+#### ボリュームを完全に削除して再作成
+```bash
+# コンテナを停止
+docker compose down
+
+# ボリュームを削除
+docker volume rm claude-container_claude-home
+
+# 再起動（新しいボリュームが作成される）
+docker compose up -d
+```
+
+#### ボリュームの内容のみクリア
+```bash
+# 一時コンテナでボリューム内容を削除
+docker run --rm -v claude-container_claude-home:/data alpine sh -c "rm -rf /data/* /data/.*"
+```
+
 ## 手動ビルド
 
 ```bash
