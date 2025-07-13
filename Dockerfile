@@ -33,4 +33,4 @@ RUN npm config set prefix '/home/claude/.npm-global' && \
 
 # Add npm global bin to PATH
 ENV PATH="/home/claude/.npm-global/bin:$PATH"
-CMD ["claude"]
+CMD ["claude", "--dangerously-skip-permissions"]
