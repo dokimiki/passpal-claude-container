@@ -32,6 +32,10 @@ RUN useradd -m -s /bin/bash claude && \
 USER claude
 WORKDIR /home/claude/workspace
 
+# Install claude monitor
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN uv tool install claude-monitor
+
 # Add Flutter and npm global bin to PATH first
 ENV PATH="/home/claude/flutter/bin:/home/claude/.npm-global/bin:$PATH"
 
