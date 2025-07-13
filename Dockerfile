@@ -32,6 +32,9 @@ RUN useradd -m -s /bin/bash claude && \
 USER claude
 WORKDIR /home/claude/workspace
 
+# Add Flutter and npm global bin to PATH first
+ENV PATH="/home/claude/flutter/bin:/home/claude/.npm-global/bin:$PATH"
+
 # Configure npm global directory and install Claude Code
 RUN npm config set prefix '/home/claude/.npm-global' && \
     npm install -g @anthropic-ai/claude-code
@@ -40,10 +43,10 @@ RUN npm config set prefix '/home/claude/.npm-global' && \
 RUN git clone https://github.com/flutter/flutter.git -b stable /home/claude/flutter && \
     chown -R claude:claude /home/claude/flutter
 
-# Add Flutter and npm global bin to PATH
-ENV PATH="/home/claude/flutter/bin:/home/claude/.npm-global/bin:$PATH"
-
 # Pre-download Dart SDK and configure Flutter
 RUN flutter precache --no-android --no-ios --no-web --no-macos --no-windows --no-fuchsia --no-linux --universal && \
     flutter config --no-analytics
-CMD ["claude", "--dangerously-skip-permissions"]
+
+# Verify claude installation and start
+RUN which claude || echo "Claude not found in PATH"
+CMD ["/home/claude/.npm-global/bin/claude", "--dangerously-skip-permissions"]
