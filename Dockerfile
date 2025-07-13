@@ -47,7 +47,4 @@ RUN git clone https://github.com/flutter/flutter.git -b stable /home/claude/flut
 RUN flutter precache --no-android --no-ios --no-web --no-macos --no-windows --no-fuchsia --no-linux --universal && \
     flutter config --no-analytics
 
-# Verify claude installation and start
-RUN which claude || echo "Claude not found in PATH"
-# CMD ["claude", "--dangerously-skip-permissions"]
-CMD ["bash"]
+CMD ["claude", "--dangerously-skip-permissions"]
