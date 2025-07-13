@@ -1,6 +1,7 @@
 # Claude Container
 
 Claude CLI を動かすためのDockerコンテナ環境です。
+個人開発しているflutterアプリ、`passpal`に最適化しています。
 
 ## 構成
 
