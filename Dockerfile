@@ -10,6 +10,11 @@ RUN apt-get update && apt-get install -y \
     ripgrep \
     sudo \
     tmux \
+    unzip \
+    xz-utils \
+    zip \
+    libglu1-mesa \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 # Install GitHub CLI
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
@@ -31,6 +36,14 @@ WORKDIR /home/claude/workspace
 RUN npm config set prefix '/home/claude/.npm-global' && \
     npm install -g @anthropic-ai/claude-code
 
-# Add npm global bin to PATH
-ENV PATH="/home/claude/.npm-global/bin:$PATH"
+# Install Flutter SDK
+RUN git clone https://github.com/flutter/flutter.git -b stable /home/claude/flutter && \
+    chown -R claude:claude /home/claude/flutter
+
+# Add Flutter and npm global bin to PATH
+ENV PATH="/home/claude/flutter/bin:/home/claude/.npm-global/bin:$PATH"
+
+# Pre-download Dart SDK and configure Flutter
+RUN flutter precache --no-android --no-ios --no-web --no-macos --no-windows --no-fuchsia --no-linux --universal && \
+    flutter config --no-analytics
 CMD ["claude", "--dangerously-skip-permissions"]
