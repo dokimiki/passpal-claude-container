@@ -39,12 +39,4 @@ ENV PATH="/home/claude/flutter/bin:/home/claude/.npm-global/bin:$PATH"
 RUN npm config set prefix '/home/claude/.npm-global' && \
     npm install -g @anthropic-ai/claude-code
 
-# Install Flutter SDK
-RUN git clone https://github.com/flutter/flutter.git -b stable /home/claude/flutter && \
-    chown -R claude:claude /home/claude/flutter
-
-# Pre-download Dart SDK and configure Flutter
-RUN flutter precache --no-android --no-ios --no-web --no-macos --no-windows --no-fuchsia --no-linux --universal && \
-    flutter config --no-analytics
-
 CMD ["claude", "--dangerously-skip-permissions"]
