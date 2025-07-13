@@ -49,4 +49,4 @@ RUN flutter precache --no-android --no-ios --no-web --no-macos --no-windows --no
 
 # Verify claude installation and start
 RUN which claude || echo "Claude not found in PATH"
-CMD ["/home/claude/.npm-global/bin/claude", "--dangerously-skip-permissions"]
+CMD ["claude", "--dangerously-skip-permissions"]
