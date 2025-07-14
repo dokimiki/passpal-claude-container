@@ -32,4 +32,4 @@ RUN npm config set prefix '/root/.npm-global' && \
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN uv tool install claude-monitor
 
-CMD ["claude", "--dangerously-skip-permissions"]
+CMD ["claude"]
