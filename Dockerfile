@@ -23,6 +23,7 @@ WORKDIR /root/workspace
 
 # Install claude monitor
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN source /root/.local/bin/env
 RUN uv tool install claude-monitor
 
 # Add Flutter and npm global bin to PATH first
